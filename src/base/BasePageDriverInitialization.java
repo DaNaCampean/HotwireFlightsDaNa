@@ -15,19 +15,6 @@ public class BasePageDriverInitialization {
         if (driver == null) {  // daca nu pun this null, the browser opens de 2 ori: odata for home page si o data for FLIGHTS PAGE din baseTest create objects
 
             ChromeOptions options = new ChromeOptions();
-//          options.addArguments("--disable-search-engine-choice-screen");
-//          options.addArguments("--disable-application-cache");
-//          options.addArguments("--disable-extensions");
-//          options.addArguments("--disable-http2");
-//           //use clean browser options:
-//           options.addArguments("--no-sandbox");
-//           options.addArguments("--disable-dev-shm-usage");
-//           options.addArguments("--disable-gpu");
-//           options.addArguments("--disable-features=NetworkService");
-//           options.addArguments("--disable-features=VizDisplayCompositor");
-//           options.addArguments("--disable-quic");
-//           options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-//           options.setExperimentalOption("useAutomationExtension", false);
 
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
