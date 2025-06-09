@@ -1,6 +1,7 @@
 package base;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import utils.WaitUtils;
 
@@ -16,6 +17,16 @@ public class BasePage {
       System.out.println("Cannot \"getURL\"");
     }
     return getURL;
+  }
+
+  public static WebElement isVisible(By byElement) {
+    WebElement element=null;
+    try {
+      element  = WaitUtils.waitForElementToBeVisible(driver, byElement, 30);
+    } catch (Exception e) {
+      System.out.println("The element is not visible = " + byElement);
+    }
+    return element;
   }
 
   public void doubleClick(By element){
@@ -48,23 +59,25 @@ public class BasePage {
   }
 
   public String getText(By element) {
-    String getTextFromElement="";
-    try {
-      getTextFromElement = WaitUtils.waitForElementToBeVisible(driver,element,15).getText();
-    } catch (Exception e) {
-      System.out.println("The element is not found. Cannot \"getText\" fot it - " + element);
-    }
-    return getTextFromElement;
+     return isVisible(element).getText();
   }
 
   public String getAttributeString(By element, String attribute){
-    String getAttributeFromElement="";
+    return isVisible(element).getDomAttribute(attribute);
+
+  }
+
+  public static void fillFields(By element,String text) {
     try {
-      getAttributeFromElement = WaitUtils.waitForElementToBeVisible(driver,element,15).getDomAttribute(attribute);
+      WebElement textField =isVisible(element);
+      clickWait(element);
+      textField.sendKeys(text);
+
     } catch (Exception e) {
-      System.out.println("The element is not found");
+      System.out.println("The element is not visible = " + element);
     }
-    return getAttributeFromElement;
+
+
   }
 
 }

@@ -5,7 +5,6 @@ import utils.DateUtils;
 import utils.WaitUtils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -41,20 +40,18 @@ public class FlightsPage extends BasePage {
     }
 
     public String FillFlyFromTextField() {
-        WebElement searchTextField = WaitUtils.waitForElementToBeClickable(driver,searchFlyFromTextField,15);
-        searchTextField.sendKeys("LAX");
+        fillFields(searchFlyFromTextField,"LAX");
         WaitUtils.implicitlyWaitFiveSeconds();
-        WaitUtils.waitForElementToBeVisible(driver, fromToFieldDropDownXPath, 15);
+        isVisible(fromToFieldDropDownXPath);
         clickWait(fromFieldSelectLaxXPath);
 
         return getAttributeString(searchFlyFromTextField,"value");
     }
 
     public String FillFlyToTextField() {
-        WebElement searchTextField = WaitUtils.waitForElementToBeClickable(driver,searchFlyToTextField,15);
-        searchTextField.sendKeys("Bucharest");
+        fillFields(searchFlyToTextField,"Bucharest");
         WaitUtils.implicitlyWaitFiveSeconds();
-        WaitUtils.waitForElementToBeVisible(driver, fromToFieldDropDownXPath, 15);
+        isVisible(fromToFieldDropDownXPath);
         clickWait(toFieldSelectOtpXPath);
 
         return getAttributeString(searchFlyToTextField,"value");
@@ -77,14 +74,14 @@ public class FlightsPage extends BasePage {
     }
 
     public String passengersSelection() {
-
+        // if I don't put this sleep, passengers "popup" is not shown
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-       clickByActions(passengersDropDownXPath);  // dropdown passengers click
+        clickByActions(passengersDropDownXPath);  // dropdown passengers click
         clickWait(selectAdultsXPath);  // 2x Adults
         clickWait(selectDonePassengersXPath); // DONE button wait for the button to be clickable
 
@@ -98,7 +95,7 @@ public class FlightsPage extends BasePage {
         WaitUtils.implicitlyWaitFiveSeconds();
         driver.manage().deleteAllCookies(); // Deletes all the cookies
         clickWait(searchFlightsXPath);
-        WaitUtils.waitForElementToBeVisible(driver, flightsResults,15);
+        isVisible(flightsResults);
         return getText(flightsResults);
     }
 
